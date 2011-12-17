@@ -1,0 +1,32 @@
+#! /usr/env/bin python
+
+import sys
+import socket
+import urllib
+
+def url_to_host(url):
+	pos = url.find('//')
+	if pos < 0:
+		url = '//' + url
+	else:
+		url = url[pos:]
+	host, rest = urllib.splithost(url)
+	return host.strip()
+
+def convert(url):
+	host = url_to_host(url)
+	return host, socket.gethostbyname(host)
+
+def convert_from(source):
+	for url in source:
+		yield convert(url)	 
+
+if __name__ == "__main__":
+    urls = sys.argv[1:]
+    if urls:
+    	source = urls
+    else:
+    	source = sys.stdin
+    for host, ipaddress in convert_from(source):
+    	if host and ipaddress:
+			sys.stdout.write('%s\t%s\n' % (ipaddress, host))

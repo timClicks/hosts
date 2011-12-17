@@ -1,0 +1,53 @@
+Intro
+=====
+
+So, the SOPA emergency list[0] is going to be fairly broken when
+IP addresses change. Also, pastebin[1] and other centralized systems,
+such as Google Docs[2], opens the door to single points of 
+failure. Git or some other DVCS is the only way to make something 
+like this scale to what's needed.
+
+
+No instructions here
+====================
+
+This repo should be used by people who already know what to do with
+its contents. Among other things, there are large security risks
+involved with directing Internet traffic. I don't want to be liable
+for someone being reliant on the information in here. So, I wont 
+accept any pull requests for people providing instructions on how
+to use a hosts file.
+
+That said, if you would like to create useful service on the basis 
+of the information in here - you should do so.
+
+
+Neither authoritative nor trustworthy
+=====================================
+
+Unless the DNS system is broken by SOPA or some other system, do
+not use this. There is a chance that  you will be infected by malicious 
+people who direct your computer to the wrong place.
+
+While DNS is still running, you can actually update the hosts
+file yourself.
+
+
+Contributing
+============
+
+These commands provide some guidance on how to contribute data:
+
+    $ echo "http://en.wikipedia.org" >> new
+    $ cat new | python bin/urls2hosts | sort -n - hosts | uniq > hosts
+    $ awk '{print $2, $1}' hosts | sort > stsoh
+    $ git add hosts stsoh
+    $ git commit
+
+
+References
+========== 
+
+  [0]: http://www.reddit.com/r/SOPA/comments/nf5p1/sopa_emergency_list/
+  [1]: http://pastebin.com/JAxK9R9S
+  [2]: https://docs.google.com/spreadsheet/ccc?key=0Ao87iUlPcmsgdGhsM2RZT29hY29sU2lCbmUzbk53M1E&hl=en_US#gid=0
