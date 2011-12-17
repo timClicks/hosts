@@ -15,11 +15,15 @@ def url_to_host(url):
 
 def convert(url):
 	host = url_to_host(url)
-	return host, socket.gethostbyname(host)
+	return socket.gethostbyname_ex(host)
 
 def convert_from(source):
 	for url in source:
-		yield convert(url)	 
+		host, aliases, addresses = convert(url)
+		for ipaddress in addresses:
+			yield host, ipaddress
+			for alias in aliases:
+				yield alias, ipaddress	 
 
 if __name__ == "__main__":
     urls = sys.argv[1:]
